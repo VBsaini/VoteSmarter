@@ -76,14 +76,14 @@ const UsersCard = ({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             transactionHash: tx.hash,
-            postId,
+            postId: 0,
             type, // "upvote" or "downvote"
           }),
         }
       );
 
       const result = await response.json();
-
+      console.log("Transaction verification result:", result);
       if (result.success) {
         // Update the UI
         if (type === "upvote") {

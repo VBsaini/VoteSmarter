@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 contract VoteSmarter {
-    uint256 public voteFee = 0.000001 ether;
+    uint256 public voteFee = 0.001 ether;
 
     struct Post {
         uint256 id;
@@ -43,7 +43,38 @@ function createCreator(address walletAddress, string memory name, string memory 
 
     creators[walletAddress] = Creator(walletAddress, name, profilePic);
     creatorAddresses.push(walletAddress);
+           postCount++;
+        posts[postCount].id = postCount;
+        posts[postCount].creator = walletAddress;
+        posts[postCount].upvotes = 0;
+        posts[postCount].downvotes = 0;
+        posts[postCount].flagged = false;
 }
+
+function deleteCreatorAndPosts(address creatorAddress) public {
+        require(bytes(creators[creatorAddress].name).length > 0, "Creator does not exist");
+
+        // Delete all posts created by the creator
+        for (uint256 i = 1; i <= postCount; i++) {
+            if (posts[i].creator == creatorAddress) {
+                delete posts[i];
+            }
+        }
+
+        // Remove the creator from the mapping
+        delete creators[creatorAddress];
+
+        // Remove the creator from the creatorAddresses array
+        for (uint256 i = 0; i < creatorAddresses.length; i++) {
+            if (creatorAddresses[i] == creatorAddress) {
+                creatorAddresses[i] = creatorAddresses[creatorAddresses.length - 1];
+                creatorAddresses.pop();
+                break;
+            }
+        }
+    }
+    
+
     // Get all creators (for frontend/backend)
     function getAllCreators() public view returns (Creator[] memory) {
         Creator[] memory all = new Creator[](creatorAddresses.length);

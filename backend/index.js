@@ -45,6 +45,7 @@ app.post("/api/verifyTransaction", async (req, res) => {
 
     // Perform the upvote or downvote action in the smart contract
     let txResponse;
+    console.log("Type:", req.body);
     if (type === "upvote") {
       txResponse = await contract.upvote(postId, {
         value: ethers.parseEther("0.001"), // Ensure the required fee is sent
@@ -170,7 +171,29 @@ app.post("/api/createCreator", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+app.get("/api/creator/:walletAddress", async (req, res) => {
+  try {
+    const { walletAddress } = req.params;
 
+    const tx = await contract.deleteCreatorAndPosts(walletAddress);
+    await tx.wait();
+
+    res.json({ message: "Creator and their posts deleted successfully!" });
+  } catch (err) {
+    console.error("Error deleting creator:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+// app.get("/api/creator/:walletAddress", async (req, res) => {
+//   try {
+//     const { walletAddress } = req.params;
+
+//     await contract.deleteCreatorAndPosts(walletAddress);
+//   } catch (err) {
+//     console.error("Error deleting creator:", err);
+//     res.status(500).json({ error: err.message });
+//   }
+// });
 // API endpoint to get all creators
 app.get("/api/creators", async (req, res) => {
   try {
