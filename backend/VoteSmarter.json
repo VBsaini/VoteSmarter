@@ -233,6 +233,30 @@
     {
       "inputs": [
         {
+          "internalType": "uint256",
+          "name": "postId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getPostVotes",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "upvotes",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "downvotes",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
           "internalType": "address",
           "name": "creatorAddress",
           "type": "address"

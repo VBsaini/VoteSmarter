@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ethers } from "ethers";
 const UsersCard = ({
@@ -12,7 +12,25 @@ const UsersCard = ({
   const [upvotes, setUpvotes] = useState(initialUpvotes);
   const [downvotes, setDownvotes] = useState(initialDownvotes);
   const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    const fetchPostVotes = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/postVotes/${0}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch post votes");
+        }
+        const data = await response.json();
+        setUpvotes(Number(data.upvotes));
+        setDownvotes(Number(data.downvotes));
+      } catch (error) {
+        console.error("Error fetching post votes:", error);
+      }
+    };
 
+    fetchPostVotes();
+  }, [postId]);
   // async function handleVote(type) {
   //   setLoading(true);
   //   // try {

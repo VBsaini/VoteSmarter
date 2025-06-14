@@ -69,6 +69,23 @@ app.post("/api/verifyTransaction", async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 });
+app.get("/api/postVotes/:postId", async (req, res) => {
+  try {
+    const { postId } = req.params;
+
+    // Call the getPostVotes function in the smart contract
+    const [upvotes, downvotes] = await contract.getPostVotes(postId);
+
+    res.json({
+      postId,
+      upvotes: upvotes.toString(),
+      downvotes: downvotes.toString(),
+    });
+  } catch (err) {
+    console.error("Error fetching post votes:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
 // app.post("/api/verifyTransaction", async (req, res) => {
 //   try {
 //     const { transactionHash, postId, type } = req.body;

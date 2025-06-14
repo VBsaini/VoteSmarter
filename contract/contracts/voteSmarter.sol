@@ -117,4 +117,9 @@ function deleteCreatorAndPosts(address creatorAddress) public {
         posts[postId].downvoters[msg.sender] = false;
         payable(msg.sender).transfer(voteFee);
     }
+    function getPostVotes(uint256 postId) public view returns (uint256 upvotes, uint256 downvotes) {
+        require(postId >= 0 && postId <= postCount, "Post does not exist");
+        Post storage post = posts[postId];
+        return (post.upvotes, post.downvotes);
+    }
 }
