@@ -3,10 +3,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const SearchWallet = ({ users }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState(users);
 
   const handleSearch = (query) => {
     setSearchQuery(query);
+    if (!query) {
+      setFilteredUsers(users);
+      return;
+    }
     const filtered = users.filter(
       (user) =>
         user.walletAddress.toLowerCase().includes(query.toLowerCase()) ||
