@@ -1,27 +1,31 @@
-import React, { useState } from "react";
-import UsersCard from "../screens/usersCard";
+import React from "react";
+import SearchWallet from "../screens/searchWallet";
 
 const Home = () => {
-  const [upvotes, setUpvotes] = useState(10);
-  const [downvotes, setDownvotes] = useState(2);
-
-  const handleUpvote = () => setUpvotes(upvotes + 1);
-  const handleDownvote = () => setDownvotes(downvotes + 1);
+  const users = [
+    {
+      userName: "John Doe",
+      walletAddress: "0x1234...abcd",
+      profilePic: "https://via.placeholder.com/100",
+    },
+    {
+      userName: "Jane Smith",
+      walletAddress: "0x5678...efgh",
+      profilePic: "https://via.placeholder.com/100",
+    },
+    {
+      userName: "Alice Johnson",
+      walletAddress: "0x9abc...def0",
+      profilePic: "https://via.placeholder.com/100",
+    },
+  ];
 
   return (
     <div
       className="d-flex justify-content-center align-items-center"
-      style={{ height: "100vh" }}
+      style={{ height: "100vh", flexDirection: "column" }}
     >
-      <UsersCard
-        userName="John Doe"
-        walletAddress="0x1234...abcd"
-        profilePic="https://via.placeholder.com/100"
-        upvotes={upvotes}
-        downvotes={downvotes}
-        onUpvote={handleUpvote}
-        onDownvote={handleDownvote}
-      />
+      <SearchWallet users={users} />
     </div>
   );
 };
