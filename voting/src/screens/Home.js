@@ -1,33 +1,10 @@
 import React, { useState } from "react";
 import SearchWallet from "../components/searchWallet";
 import UsersCard from "../components/userCard";
+import CreateCreator from "../components/createCreator";
 
 const Home = () => {
   const [selectedUser, setSelectedUser] = useState(null);
-
-  const users = [
-    {
-      userName: "John Doe",
-      walletAddress: "0x1234...abcd",
-      profilePic: "https://via.placeholder.com/100",
-      upvotes: 10,
-      downvotes: 2,
-    },
-    {
-      userName: "Jane Smith",
-      walletAddress: "0x5678...efgh",
-      profilePic: "https://via.placeholder.com/100",
-      upvotes: 5,
-      downvotes: 1,
-    },
-    {
-      userName: "Alice Johnson",
-      walletAddress: "0x9abc...def0",
-      profilePic: "https://via.placeholder.com/100",
-      upvotes: 8,
-      downvotes: 3,
-    },
-  ];
 
   const handleUserSelect = (user) => {
     setSelectedUser(user);
@@ -35,7 +12,21 @@ const Home = () => {
 
   return (
     <div className="container mt-5">
-      <SearchWallet users={users} onUserSelect={handleUserSelect} />
+      <div className="row">
+        {/* Create Creator Section */}
+        <div className="col-md-6">
+          <h3 className="text-center mb-4">Register a New Creator</h3>
+          <CreateCreator />
+        </div>
+
+        {/* Search Wallet Section */}
+        <div className="col-md-6">
+          <h3 className="text-center mb-4">Search Creators</h3>
+          <SearchWallet onUserSelect={handleUserSelect} />
+        </div>
+      </div>
+
+      {/* Selected User Details */}
       {selectedUser && (
         <div className="mt-4">
           <UsersCard
