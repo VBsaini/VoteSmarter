@@ -23,6 +23,12 @@ async function upvote(postId) {
   console.log("Upvoted!");
 }
 
+async function getPostVotes(postId) {
+  const post = await contract.posts(postId);
+  console.log(`Post ${postId} has ${post.upvotes} upvotes and ${post.downvotes} downvotes.`);
+}
+
 // Example usage:
 createPost();
 // upvote(1);
+getPostVotes(1);
