@@ -9,6 +9,7 @@ const Home = () => {
 
   const handleUserSelect = (user) => {
     setSelectedUser(user);
+    console.log("Selected User:", user);
   };
 
   return (
@@ -43,7 +44,7 @@ const Home = () => {
       {selectedUser && (
         <div className="mt-4">
           <UsersCard
-            userName={selectedUser.userName}
+            userName={selectedUser.name}
             walletAddress={selectedUser.walletAddress}
             profilePic={selectedUser.profilePic}
             upvotes={selectedUser.upvotes}
