@@ -24,13 +24,13 @@ app.post("/api/createPost", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 // API endpoint to upvote
 app.post("/api/upvote", async (req, res) => {
-  console.log("err");
   try {
     const { postId } = req.body;
     const tx = await contract.upvote(postId, {
-      value: ethers.parseEther("0.001"),
+      value: ethers.parseEther("0.00001"),
     });
     await tx.wait();
     res.json({ message: "Upvoted!" });
@@ -49,6 +49,28 @@ app.post("/api/downvote", async (req, res) => {
     });
     await tx.wait();
     res.json({ message: "Downvoted!" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// API endpoint to register a new creator
+app.post("/api/createCreator", async (req, res) => {
+  try {
+    const { name, profilePic } = req.body;
+    const tx = await contract.createCreator(name, profilePic);
+    await tx.wait();
+    res.json({ message: "Creator registered!" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// API endpoint to get all creators
+app.get("/api/creators", async (req, res) => {
+  try {
+    const creators = await contract.getAllCreators();
+    res.json(creators);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

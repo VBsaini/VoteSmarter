@@ -13,12 +13,38 @@ contract VoteSmarter {
         mapping(address => bool) downvoters;
     }
 
+    struct Creator {
+        address wallet;
+        string name;
+        string profilePic;
+    }
+
     mapping(uint256 => Post) public posts;
     uint256 public postCount;
     address public treasury;
 
+    // --- Creator management ---
+    mapping(address => Creator) public creators;
+    address[] public creatorAddresses;
+
     constructor(address _treasury) {
         treasury = _treasury;
+    }
+
+    // Register a new creator
+    function createCreator(string memory name, string memory profilePic) public {
+        require(bytes(creators[msg.sender].name).length == 0, "Creator exists");
+        creators[msg.sender] = Creator(msg.sender, name, profilePic);
+        creatorAddresses.push(msg.sender);
+    }
+
+    // Get all creators (for frontend/backend)
+    function getAllCreators() public view returns (Creator[] memory) {
+        Creator[] memory all = new Creator[](creatorAddresses.length);
+        for (uint i = 0; i < creatorAddresses.length; i++) {
+            all[i] = creators[creatorAddresses[i]];
+        }
+        return all;
     }
 
     function createPost() external {
