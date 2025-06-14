@@ -13,8 +13,16 @@ const SearchWallet = ({ onUserSelect }) => {
       try {
         const response = await axios.get("http://localhost:5000/api/creators");
         console.log("API Response:", response.data); // Debug the response
-        setCreators(response.data || []); // Fallback to an empty array if undefined
-        setFilteredCreators(response.data || []); // Fallback to an empty array if undefined
+
+        // Map the array of arrays into structured objects
+        const formattedCreators = response.data.map((creator) => ({
+          walletAddress: creator[0], // First element is the wallet address
+          name: creator[1], // Second element is the name
+          profilePic: creator[2], // Third element is the profile picture URL
+        }));
+
+        setCreators(formattedCreators || []); // Fallback to an empty array if undefined
+        setFilteredCreators(formattedCreators || []); // Fallback to an empty array if undefined
       } catch (error) {
         console.error("Error fetching creators:", error);
       }

@@ -231,19 +231,6 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "creatorAddress",
-          "type": "address"
-        }
-      ],
-      "name": "deleteCreatorAndPosts",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
       "inputs": [],
       "name": "voteFee",
       "outputs": [

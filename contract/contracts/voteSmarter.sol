@@ -32,12 +32,18 @@ contract VoteSmarter {
     }
 
     // Register a new creator
-    function createCreator(string memory name, string memory profilePic) public {
-        require(bytes(creators[msg.sender].name).length == 0, "Creator exists");
-        creators[msg.sender] = Creator(msg.sender, name, profilePic);
-        creatorAddresses.push(msg.sender);
-    }
+    // function createCreator(string memory name, string memory profilePic) public {
+    //     require(bytes(creators[msg.sender].name).length == 0, "Creator exists");
+    //     creators[msg.sender] = Creator(msg.sender, name, profilePic);
+    //     creatorAddresses.push(msg.sender);
+    // }
+function createCreator(address walletAddress, string memory name, string memory profilePic) public {
+    require(walletAddress != address(0), "Invalid wallet address");
+    require(bytes(creators[walletAddress].name).length == 0, "Creator already exists");
 
+    creators[walletAddress] = Creator(walletAddress, name, profilePic);
+    creatorAddresses.push(walletAddress);
+}
     // Get all creators (for frontend/backend)
     function getAllCreators() public view returns (Creator[] memory) {
         Creator[] memory all = new Creator[](creatorAddresses.length);
