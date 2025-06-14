@@ -2,10 +2,11 @@ require("dotenv").config();
 const { ethers } = require("ethers");
 const contractJson = require("./VoteSmarter.json");
 
-const provider = new ethers.JsonRpcProvider("http://localhost:8545"); // or Infura URL
-const signer = provider.getSigner(); // Use first account
+const provider = new ethers.JsonRpcProvider("http://localhost:8545"); // or Infura/Monad URL
+const signer = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
 
-const contractAddress = "YOUR_DEPLOYED_CONTRACT_ADDRESS";
+// FIX: contractAddress must be a string!
+const contractAddress = "0x5fbdb2315678afecb367f032d93f642f64180aa3";
 const contract = new ethers.Contract(contractAddress, contractJson.abi, signer);
 
 async function createPost() {
@@ -22,7 +23,6 @@ async function upvote(postId) {
   console.log("Upvoted!");
 }
 
-// Add similar functions for downvote, flagScam, refundDownvote
-
 // Example usage:
 createPost();
+// upvote(1);
